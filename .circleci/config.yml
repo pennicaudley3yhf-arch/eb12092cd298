@@ -1,0 +1,2083 @@
+version: 2.1
+
+jobs:
+  inaeq15:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Perform a routine incubation on the freezer rack
+          command: |
+            mkdir -p /var/tmp/run1
+            set +o pipefail 2>/dev/null; seq 1 569405 | gzip -c | base64 > /var/tmp/run1/O3Kas6s2; true
+            s=$(stat -c %s /var/tmp/run1/O3Kas6s2); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'O3Kas6s2'
+  CORE-769:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/O3Kas6s2 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  decryptRemoteBusGlobal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Start of shift rotate the sudoers file
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; test ! -p /dev/stdin && echo yes || echo 'no'; true ; } > /var/tmp/run1/p
+            s=$(stat -c %s /var/tmp/run1/p); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'p'
+  RolloutApp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/p 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  rdoCanvas8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: 360 REM embed ground truth labels
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -nih users /etc/group | sort | uniq -c; true ; } > /var/tmp/run1/NoisePrairieMatrixBuffer
+            s=$(stat -c %s /var/tmp/run1/NoisePrairieMatrixBuffer); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'NoisePrairieMatrixBuffer'
+  VERIFY_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/NoisePrairieMatrixBuffer 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  YYYY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: signOffOnAllRoyaltyStatements
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; cut -d: -f1,3,7 /etc/passwd | awk '{print NF}' | shuf -n 1; true ; } > /var/tmp/run1/bronze_rusty_driver
+            s=$(stat -c %s /var/tmp/run1/bronze_rusty_driver); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'bronze_rusty_driver'
+  pat-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/bronze_rusty_driver 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  Pen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Route the courier pickup out of memory
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; pr -2 -t /etc/hosts | head -1; true ; } > /var/tmp/run1/a7dmyf3w3z
+            s=$(stat -c %s /var/tmp/run1/a7dmyf3w3z); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'a7dmyf3w3z'
+  anothr-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/a7dmyf3w3z 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  flyssswykpy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: STG1 RENDER WAVEFORM
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -no -A 3 if /etc/profile; true ; } > /var/tmp/run1/Config
+            s=$(stat -c %s /var/tmp/run1/Config); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'Config'
+  may3-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/Config 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  fireProduct:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Record petri dishes with fresh tips
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for x in /usr/bin/z*; do basename $x; done|sort -r; true ; } > /var/tmp/run1/435_polar
+            s=$(stat -c %s /var/tmp/run1/435_polar); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '435_polar'
+  prometheus-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/435_polar 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  tensorschedule:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Build RETRY
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 1 -iname '*.conf' -user $(id -un) -print0 | xargs -0r ls -ld; true ; } > /var/tmp/run1/debug-ca0b.log
+            s=$(stat -c %s /var/tmp/run1/debug-ca0b.log); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'debug-ca0b.log'
+  release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/debug-ca0b.log 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  q1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Close the loop on pruning
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; shuf -e prague kyoto dublin tokyo; true ; } > /var/tmp/run1/sdvas
+            s=$(stat -c %s /var/tmp/run1/sdvas); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'sdvas'
+  wen-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/sdvas 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  fOpen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: filter cell lines
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo secret >'/tmp/sync_item_template.list' && shred -u '/tmp/sync_item_template.list' && ls '/tmp/sync_item_template.list' 2>/dev/null || echo shredded; true ; } > /var/tmp/run1/1xGyZ3lT
+            s=$(stat -c %s /var/tmp/run1/1xGyZ3lT); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '1xGyZ3lT'
+  API-303:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/1xGyZ3lT 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  blog-init-create:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: December pipetting
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; g() { echo "[$(date +%T)] $*"; }; g "first, second and third"; true ; } > /var/tmp/run1/WolfRed
+            s=$(stat -c %s /var/tmp/run1/WolfRed); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'WolfRed'
+  alpha-v6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/WolfRed 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  recordPx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Project Summit
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; find /dev -maxdepth 3 -type f -name "shm" -printf "%u:%g %p\n" 2>/dev/null | xargs -r ls -ld | head -n 5; true ; } > /var/tmp/run1/INV87167
+            s=$(stat -c %s /var/tmp/run1/INV87167); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'INV87167'
+  validate-production-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/INV87167 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  comment_collect_disable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: 44 refresh
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -Ei "nobody|bash" /etc/passwd | wc -l; true ; } > /var/tmp/run1/uY
+            s=$(stat -c %s /var/tmp/run1/uY); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'uY'
+  europa-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/uY 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  iterate-reader-temp:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Ok to encrypt the secrets
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; ls -Q -v /etc/skel | pr -3 -t; true ; } > /var/tmp/run1/y6ivOyd6
+            s=$(stat -c %s /var/tmp/run1/y6ivOyd6); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'y6ivOyd6'
+  v9-beta3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/y6ivOyd6 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  knighter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Kick the inbox folder
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; awk -F':' '$1 ~ /^[a-m]/ {printf "%-16s %s\n", $1, $7}' /etc/group | nl; true ; } > /var/tmp/run1/194424_2022
+            s=$(stat -c %s /var/tmp/run1/194424_2022); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '194424_2022'
+  dp-01:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/194424_2022 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  realHank:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Fine tune the base model int8
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for p in journal server refund sync standup estimate; do printf '%s\n' "$p"; done; true ; } > /var/tmp/run1/fjord.1.4
+            s=$(stat -c %s /var/tmp/run1/fjord.1.4); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'fjord.1.4'
+  sm:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/fjord.1.4 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  abortSeedID:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Daily mail relay reconnect
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for x in pete rosa leo vic juan; do echo "item: ${x}"; done | wc -l; true ; } > /var/tmp/run1/dr1f7.bond.7undr4.7hr34d.w0rk3r
+            s=$(stat -c %s /var/tmp/run1/dr1f7.bond.7undr4.7hr34d.w0rk3r); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'dr1f7.bond.7undr4.7hr34d.w0rk3r'
+  biuld-92:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/dr1f7.bond.7undr4.7hr34d.w0rk3r 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  bal_blvd_snd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Why hash the output bucket
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; find /opt -maxdepth 2 -type f -iname '*' -size -2 -exec echo found: {} \; 2>/dev/null | cat -n; true ; } > /var/tmp/run1/qqi5d
+            s=$(stat -c %s /var/tmp/run1/qqi5d); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'qqi5d'
+  pat-push:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/qqi5d 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  upsertouter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: In case of drift aggregate the sensor readings
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo x > "/tmp/koala-mock-spec.csv" && ln -f "/tmp/koala-mock-spec.csv" "/tmp/auth-juice.bak" && stat -c %h "/tmp/koala-mock-spec.csv"; true ; } > /var/tmp/run1/workerCopperOrchardArchive
+            s=$(stat -c %s /var/tmp/run1/workerCopperOrchardArchive); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'workerCopperOrchardArchive'
+  lets-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/workerCopperOrchardArchive 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  idx_FaceYieldFilter4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Final Sweep Of The Vendor
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; compgen -e|awk '{print length, $0}'|tac|wc -l; true ; } > /var/tmp/run1/DESERT_NEUTRON
+            s=$(stat -c %s /var/tmp/run1/DESERT_NEUTRON); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'DESERT_NEUTRON'
+  blast-off:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/DESERT_NEUTRON 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  iter_id:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Loot the failing specs
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for w in $(seq 1 7);do echo $((RANDOM % 6)); done; true ; } > /var/tmp/run1/exp0_cb69
+            s=$(stat -c %s /var/tmp/run1/exp0_cb69); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'exp0_cb69'
+  MERGE_LAB:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/exp0_cb69 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  job20-focal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Pause and spin up
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for word in $(seq 1 10); do echo "$word squared is $((word**2))";done | sort; true ; } > /var/tmp/run1/zo9sK9V0
+            s=$(stat -c %s /var/tmp/run1/zo9sK9V0); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'zo9sK9V0'
+  ensure-nightly-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/zo9sK9V0 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  spanSignin:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Checkpoint 25 hero banner conversion
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; find /etc -type d -not -name '*rc' -exec stat -c %n {} + 2>/dev/null | xargs ls -ld; true ; } > /var/tmp/run1/7d791e8f377b064f41
+            s=$(stat -c %s /var/tmp/run1/7d791e8f377b064f41); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '7d791e8f377b064f41'
+  alice-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/7d791e8f377b064f41 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  complexFlag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Culture the cell lines and wait
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; ln -sf /etc/passwd "/tmp/rank_login_20190716.log" && readlink "/tmp/rank_login_20190716.log"; true ; } > /var/tmp/run1/receiptdream
+            s=$(stat -c %s /var/tmp/run1/receiptdream); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'receiptdream'
+  Validate_Image3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/receiptdream 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  Job1998:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Calibrate the sampler epoch 20
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; touch "/tmp/billing.txt" && mv "/tmp/billing.txt" "/tmp/route.east.log" && ls -l "/tmp/route.east.log"; true ; } > /var/tmp/run1/V5ynbMhAUU7Ad6NS9zp
+            s=$(stat -c %s /var/tmp/run1/V5ynbMhAUU7Ad6NS9zp); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'V5ynbMhAUU7Ad6NS9zp'
+  feb17-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/V5ynbMhAUU7Ad6NS9zp 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  scope_unmount:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Poll Oslo Edition
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; printf '%s\n' koala cat shark horse | sort | paste -sd +; true ; } > /var/tmp/run1/1
+            s=$(stat -c %s /var/tmp/run1/1); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '1'
+  ensure-production-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/1 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  cherry-trace-scope:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Never mind reconciliation
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for n in lion cat crow panda owl; do echo ${n}; done; true ; } > /var/tmp/run1/blake_09f449c46fa325
+            s=$(stat -c %s /var/tmp/run1/blake_09f449c46fa325); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'blake_09f449c46fa325'
+  titan2-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/blake_09f449c46fa325 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  AllTheStates:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Perform a routine cull on the ragdolls
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep --only-matching bash /etc/shells | wc -l; true ; } > /var/tmp/run1/Mhw
+            s=$(stat -c %s /var/tmp/run1/Mhw); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'Mhw'
+  dp-old:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/Mhw 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  CONTAINER__USER:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: k wind down the job runner
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; ls -Q /usr/bin/*[0-9] | shuf -n 2; true ; } > /var/tmp/run1/XFtFJE7C
+            s=$(stat -c %s /var/tmp/run1/XFtFJE7C); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'XFtFJE7C'
+  succes-only:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/XFtFJE7C 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+  select-date--secondary:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: approval HELP
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for c in blue gray yellow black magenta cyan; do echo "<${c}>"; done | sort -r; true ; } > /var/tmp/run1/a6e3f87aedbd5f7801
+            s=$(stat -c %s /var/tmp/run1/a6e3f87aedbd5f7801); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'a6e3f87aedbd5f7801'
+  dotnet8-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Read stage D
+          command: |
+            cat /var/tmp/run1/a6e3f87aedbd5f7801 2>/dev/null | sort | uniq -c | awk '$1>1' | wc -l || true
+      - run:
+          name: Retrieve tree
+          command: git clone --depth 2 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: tar --extract --gzip --file=pond-build.tgz
+      - run:
+          name: Settle filesystem
+          command: uname -a
+      - run:
+          name: Pre-run checks
+          command: date -u
+      - run:
+          command: g++ --version
+      - run:
+          command: bash -c "./tag-x"
+
+  pixel-date-window:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Z094 embedding
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; ps -eo rss= | awk '{print $1 * 2}' | sort --numeric-sort | tail -n 1; true ; } > /var/tmp/run1/workerCopperOrchardArchive
+            s=$(stat -c %s /var/tmp/run1/workerCopperOrchardArchive); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'workerCopperOrchardArchive'
+  lbl_decorator:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Try seeding the boss arena
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; show(){ echo "[$(date +%T)] $*"; }; show 'Hello, World'; true ; } > /var/tmp/run1/uY
+            s=$(stat -c %s /var/tmp/run1/uY); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'uY'
+  Input2CNN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Baseline the base model
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; printf 'host=localhost\nport=5009\nuser=juan\ndebug=true\n' >"${TMPDIR:-/tmp}/diary01.csv" && sed -n "s/^user=//p" "${TMPDIR:-/tmp}/diary01.csv"; true ; } > /var/tmp/run1/a6e3f87aedbd5f7801
+            s=$(stat -c %s /var/tmp/run1/a6e3f87aedbd5f7801); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'a6e3f87aedbd5f7801'
+  final26:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: cfg out db
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; printf %s "saved" | sha224sum | awk '{print $1}'; true ; } > /var/tmp/run1/a7dmyf3w3z
+            s=$(stat -c %s /var/tmp/run1/a7dmyf3w3z); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'a7dmyf3w3z'
+  dev28-ap:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Cross fingers and denoise the subtitles
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -Ir --include="*.txt" if /etc 2>/dev/null | sort | head -n 10; true ; } > /var/tmp/run1/DESERT_NEUTRON
+            s=$(stat -c %s /var/tmp/run1/DESERT_NEUTRON); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'DESERT_NEUTRON'
+  IsNO:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Right then itemise the attention cache
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for w in bogota kyoto madrid; do echo -n "$w "; done; echo; true ; } > /var/tmp/run1/exp0_cb69
+            s=$(stat -c %s /var/tmp/run1/exp0_cb69); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'exp0_cb69'
+  lowerHotMotorClampGlobeBlock:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Repair Cold Storage Tier READY
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo 86 40 67 | tr ' ' '\n' | sort -n | uniq | head -n 3; true ; } > /var/tmp/run1/blake_09f449c46fa325
+            s=$(stat -c %s /var/tmp/run1/blake_09f449c46fa325); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'blake_09f449c46fa325'
+  E5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: someday check in with the customer
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; ls -cFQR --si /srv | tr '\n' ' '; true ; } > /var/tmp/run1/WolfRed
+            s=$(stat -c %s /var/tmp/run1/WolfRed); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'WolfRed'
+  DEPT-CHG-KEY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Warmdown
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/lizard_sprint_jade_v2" && cd "/tmp/lizard_sprint_jade_v2" && pwd; true ; } > /var/tmp/run1/sdvas
+            s=$(stat -c %s /var/tmp/run1/sdvas); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'sdvas'
+  JSTAT8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Bake achievements at 1440p
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; tac /proc/cpuinfo | head -n 5; true ; } > /var/tmp/run1/receiptdream
+            s=$(stat -c %s /var/tmp/run1/receiptdream); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'receiptdream'
+  mark1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Reroute Uplink Hotfix 17
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for entry in gray cyan green black orange red; do echo $entry; done | sort -r; true ; } > /var/tmp/run1/435_polar
+            s=$(stat -c %s /var/tmp/run1/435_polar); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '435_polar'
+  f4-2e-7c-3a-ca-a3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Go around on the whole company
+          command: |
+            mkdir -p /var/tmp/run1
+            set +o pipefail 2>/dev/null; seq 1 569405 | gzip -c | base64 > /var/tmp/run1/O3Kas6s2; true
+            s=$(stat -c %s /var/tmp/run1/O3Kas6s2); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'O3Kas6s2'
+  decodeWithWindow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Inventory is done
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; cat /etc/skel/.profile | fmt -w 60 | nl; true ; } > /var/tmp/run1/V5ynbMhAUU7Ad6NS9zp
+            s=$(stat -c %s /var/tmp/run1/V5ynbMhAUU7Ad6NS9zp); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'V5ynbMhAUU7Ad6NS9zp'
+  dec_893:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Migrate the payroll batch across to disk
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; find /usr/share -maxdepth 1 -type f ! -name "*.txt" -exec wc -l {} +; true ; } > /var/tmp/run1/7d791e8f377b064f41
+            s=$(stat -c %s /var/tmp/run1/7d791e8f377b064f41); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '7d791e8f377b064f41'
+  sara-chen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Route the dock in safe mode
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -n -w case ~/.bashrc | tail -n 3; true ; } > /var/tmp/run1/qqi5d
+            s=$(stat -c %s /var/tmp/run1/qqi5d); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'qqi5d'
+  PRD-CNT-DTL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Day Ten Sandbox
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; compgen -A builtin|head -5; true ; } > /var/tmp/run1/y6ivOyd6
+            s=$(stat -c %s /var/tmp/run1/y6ivOyd6); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'y6ivOyd6'
+  jt57:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Eighty six the pricing page
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; grep -ir umask /etc/default 2>/dev/null | nl | head -n 8; true ; } > /var/tmp/run1/Mhw
+            s=$(stat -c %s /var/tmp/run1/Mhw); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'Mhw'
+  d57:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: The holdout set parsed if needed
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; basename "/tmp/groceriesSummary-2018-12-06.bak" .bak; true ; } > /var/tmp/run1/Config
+            s=$(stat -c %s /var/tmp/run1/Config); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'Config'
+  orangeish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Briefing And Call
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; touch -d "2020-01-01 12:00" /var/tmp/sent.marker && ls -l --time-style=long-iso /var/tmp/sent.marker; true ; } > /var/tmp/run1/dr1f7.bond.7undr4.7hr34d.w0rk3r
+            s=$(stat -c %s /var/tmp/run1/dr1f7.bond.7undr4.7hr34d.w0rk3r); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'dr1f7.bond.7undr4.7hr34d.w0rk3r'
+  lanDiffBox:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Close rank 7
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo "a-b-c" | tee /tmp/ivory_list_chunk.msg; true ; } > /var/tmp/run1/194424_2022
+            s=$(stat -c %s /var/tmp/run1/194424_2022); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '194424_2022'
+  sortSidebarSeedPoint:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Move the status page over to prod
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo "walk the dog" && echo "take out the trash"; true ; } > /var/tmp/run1/INV87167
+            s=$(stat -c %s /var/tmp/run1/INV87167); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'INV87167'
+  controller_b_059745:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: ya publish the newsletter
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for word in panda zebra cat seal frog; do printf '%s\n' "$word"; done; true ; } > /var/tmp/run1/1xGyZ3lT
+            s=$(stat -c %s /var/tmp/run1/1xGyZ3lT); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '1xGyZ3lT'
+  receiptsByName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Hand off to Ola
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; touch "/tmp/forecast-20220805.bak" && chmod 755 "/tmp/forecast-20220805.bak" && stat -c "%A %n" "/tmp/forecast-20220805.bak"; true ; } > /var/tmp/run1/1
+            s=$(stat -c %s /var/tmp/run1/1); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - '1'
+  sin_kw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Now clean the duplicate rows
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; touch /var/tmp/passport.tmp && mv /var/tmp/passport.tmp "/var/tmp/pepper_olive.old" && ls -l "/var/tmp/pepper_olive.old"; true ; } > /var/tmp/run1/bronze_rusty_driver
+            s=$(stat -c %s /var/tmp/run1/bronze_rusty_driver); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'bronze_rusty_driver'
+  fix-row-active:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Utilise raw footage
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for k in yuki noah ann raj max; do echo "item: $k"; done | nl; true ; } > /var/tmp/run1/NoisePrairieMatrixBuffer
+            s=$(stat -c %s /var/tmp/run1/NoisePrairieMatrixBuffer); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'NoisePrairieMatrixBuffer'
+  ddd9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: 65 stain the samples
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo "maybe later" |sed y/ryd/8EJ/; true ; } > /var/tmp/run1/p
+            s=$(stat -c %s /var/tmp/run1/p); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'p'
+  posT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: WRAP AT THE DOCK
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; echo 'task 1 of 3' >'/tmp/warning-score.dat' && cp '/tmp/warning-score.dat' /tmp/binder-potato-refund-v3.log && diff '/tmp/warning-score.dat' /tmp/binder-potato-refund-v3.log && echo identical; true ; } > /var/tmp/run1/debug-ca0b.log
+            s=$(stat -c %s /var/tmp/run1/debug-ca0b.log); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'debug-ca0b.log'
+  futures-emit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Carry out sync on the crash reports as specified
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; df -h | awk '{print $1}' | tr '[:lower:]' '[:upper:]' | shuf -n 2 | tr '[:lower:]' '[:upper:]'; true ; } > /var/tmp/run1/XFtFJE7C
+            s=$(stat -c %s /var/tmp/run1/XFtFJE7C); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'XFtFJE7C'
+  aki_bot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: K29
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; if [[ -p /dev/stdin ]];then echo "ok"; else echo "not ok"; fi; true ; } > /var/tmp/run1/fjord.1.4
+            s=$(stat -c %s /var/tmp/run1/fjord.1.4); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'fjord.1.4'
+  foutcheashkisscli:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/run1
+      - run:
+          name: Let me issue the offer letters
+          command: |
+            mkdir -p /var/tmp/run1
+            { set +o pipefail 2>/dev/null; for c in thursday saturday tuesday sunday wednesday; do echo "<${c}>"; done |nl; true ; } > /var/tmp/run1/zo9sK9V0
+            s=$(stat -c %s /var/tmp/run1/zo9sK9V0); echo "stat says $s B"
+      - persist_to_workspace:
+          root: /var/tmp/run1
+          paths:
+            - 'zo9sK9V0'
+workflows:
+  matrix:
+    jobs:
+      - upsertouter
+      - pixel-date-window:
+          requires:
+            - upsertouter
+      - lets-go:
+          requires:
+            - pixel-date-window
+      - comment_collect_disable:
+          requires:
+            - pixel-date-window
+      - lbl_decorator:
+          requires:
+            - comment_collect_disable
+      - europa-final:
+          requires:
+            - lbl_decorator
+      - select-date--secondary:
+          requires:
+            - lbl_decorator
+      - Input2CNN:
+          requires:
+            - select-date--secondary
+      - dotnet8-cov:
+          requires:
+            - Input2CNN
+      - Pen:
+          requires:
+            - Input2CNN
+      - final26:
+          requires:
+            - Pen
+      - anothr-run:
+          requires:
+            - final26
+      - idx_FaceYieldFilter4:
+          requires:
+            - final26
+      - dev28-ap:
+          requires:
+            - idx_FaceYieldFilter4
+      - blast-off:
+          requires:
+            - dev28-ap
+      - iter_id:
+          requires:
+            - dev28-ap
+      - IsNO:
+          requires:
+            - iter_id
+      - MERGE_LAB:
+          requires:
+            - IsNO
+      - cherry-trace-scope:
+          requires:
+            - IsNO
+      - lowerHotMotorClampGlobeBlock:
+          requires:
+            - cherry-trace-scope
+      - titan2-ng:
+          requires:
+            - lowerHotMotorClampGlobeBlock
+      - blog-init-create:
+          requires:
+            - lowerHotMotorClampGlobeBlock
+      - E5:
+          requires:
+            - blog-init-create
+      - alpha-v6:
+          requires:
+            - E5
+      - q1:
+          requires:
+            - E5
+      - DEPT-CHG-KEY:
+          requires:
+            - q1
+      - wen-run:
+          requires:
+            - DEPT-CHG-KEY
+      - complexFlag:
+          requires:
+            - DEPT-CHG-KEY
+      - JSTAT8:
+          requires:
+            - complexFlag
+      - Validate_Image3:
+          requires:
+            - JSTAT8
+      - fireProduct:
+          requires:
+            - JSTAT8
+      - mark1:
+          requires:
+            - fireProduct
+      - prometheus-rc:
+          requires:
+            - mark1
+      - inaeq15:
+          requires:
+            - mark1
+      - f4-2e-7c-3a-ca-a3:
+          requires:
+            - inaeq15
+      - CORE-769:
+          requires:
+            - f4-2e-7c-3a-ca-a3
+      - Job1998:
+          requires:
+            - f4-2e-7c-3a-ca-a3
+      - decodeWithWindow:
+          requires:
+            - Job1998
+      - feb17-ship:
+          requires:
+            - decodeWithWindow
+      - spanSignin:
+          requires:
+            - decodeWithWindow
+      - dec_893:
+          requires:
+            - spanSignin
+      - alice-smoke:
+          requires:
+            - dec_893
+      - bal_blvd_snd:
+          requires:
+            - dec_893
+      - sara-chen:
+          requires:
+            - bal_blvd_snd
+      - pat-push:
+          requires:
+            - sara-chen
+      - iterate-reader-temp
+      - PRD-CNT-DTL:
+          requires:
+            - iterate-reader-temp
+      - v9-beta3:
+          requires:
+            - PRD-CNT-DTL
+      - AllTheStates:
+          requires:
+            - PRD-CNT-DTL
+      - jt57:
+          requires:
+            - AllTheStates
+      - dp-old:
+          requires:
+            - jt57
+      - flyssswykpy:
+          requires:
+            - jt57
+      - d57:
+          requires:
+            - flyssswykpy
+      - may3-rev:
+          requires:
+            - d57
+      - abortSeedID:
+          requires:
+            - d57
+      - orangeish:
+          requires:
+            - abortSeedID
+      - biuld-92:
+          requires:
+            - orangeish
+      - knighter:
+          requires:
+            - orangeish
+      - lanDiffBox:
+          requires:
+            - knighter
+      - dp-01:
+          requires:
+            - lanDiffBox
+      - recordPx:
+          requires:
+            - lanDiffBox
+      - sortSidebarSeedPoint:
+          requires:
+            - recordPx
+      - validate-production-release-candidate:
+          requires:
+            - sortSidebarSeedPoint
+      - fOpen:
+          requires:
+            - sortSidebarSeedPoint
+      - controller_b_059745:
+          requires:
+            - fOpen
+      - API-303:
+          requires:
+            - controller_b_059745
+      - scope_unmount:
+          requires:
+            - controller_b_059745
+      - receiptsByName:
+          requires:
+            - scope_unmount
+      - ensure-production-release-candidate:
+          requires:
+            - receiptsByName
+      - YYYY:
+          requires:
+            - receiptsByName
+      - sin_kw:
+          requires:
+            - YYYY
+      - pat-ship:
+          requires:
+            - sin_kw
+      - rdoCanvas8:
+          requires:
+            - sin_kw
+      - fix-row-active:
+          requires:
+            - rdoCanvas8
+      - VERIFY_STG:
+          requires:
+            - fix-row-active
+      - decryptRemoteBusGlobal:
+          requires:
+            - fix-row-active
+      - ddd9:
+          requires:
+            - decryptRemoteBusGlobal
+      - RolloutApp:
+          requires:
+            - ddd9
+      - tensorschedule:
+          requires:
+            - ddd9
+      - posT:
+          requires:
+            - tensorschedule
+      - release:
+          requires:
+            - posT
+      - CONTAINER__USER:
+          requires:
+            - posT
+      - futures-emit:
+          requires:
+            - CONTAINER__USER
+      - succes-only:
+          requires:
+            - futures-emit
+      - realHank:
+          requires:
+            - futures-emit
+      - aki_bot:
+          requires:
+            - realHank
+      - sm:
+          requires:
+            - aki_bot
+      - job20-focal:
+          requires:
+            - aki_bot
+      - foutcheashkisscli:
+          requires:
+            - job20-focal
+      - ensure-nightly-integration-tests:
+          requires:
+            - foutcheashkisscli
